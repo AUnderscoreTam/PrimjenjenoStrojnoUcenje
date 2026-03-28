@@ -9,6 +9,8 @@ fig.subplots_adjust(wspace=0.4, hspace=0.4)
 # url koji sadrzi xml datoteku s mjerenjima:
 # naglasiti da treba odabrati xml file, ne json
 url = 'http://iszz.azo.hr/iskzl/rs/podatak/export/xml?postaja=160&polutant=5&tipPodatka=0&vrijemeOd=01.01.2017&vrijemeDo=31.3.2017'
+# 1)
+# url = "https://iszz.azo.hr/iskzl/rs/podatak/export/json?postaja=285&polutant=5&tipPodatka=4&vrijemeOd=1.1.2017&vrijemeDo=31.12.2017"
 
 airQualityHR = urllib.request.urlopen(url).read()
 root = ET.fromstring(airQualityHR)
@@ -22,12 +24,12 @@ df = pd.DataFrame(columns=('mjerenje', 'vrijeme'))
 children = list(root)
 i = 0
 while True:
-    
+
     try:
         obj = list(children[i])
     except:
         break
-    
+
     row = dict(zip(['mjerenje', 'vrijeme'], [obj[0].text, obj[2].text]))
     row_s = pd.Series(row)
     row_s.name = i
