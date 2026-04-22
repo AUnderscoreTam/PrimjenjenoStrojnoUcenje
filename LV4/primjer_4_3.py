@@ -21,6 +21,8 @@ int64
 # 3 automobil 2591 najvecu, a automobil 4778 najmanju cijenu
 # 4 575
 # 5 automobil 3067 najvise, a autmobil 6514 najmanje km
+# 6 najčešče imaju 5 sjedala
+# 7 za dizel 88039 za benzin 54101
 
 # ucitavanje ociscenih podataka
 df = pd.read_csv('cars_processed.csv')
@@ -28,6 +30,7 @@ print(df.info())
 
 print(df.selling_price.idxmax())
 print(df.selling_price.idxmin())
+
 count = 0
 for year in df.year:
     if year == 2012:
@@ -39,3 +42,5 @@ print(df.km_driven.idxmin())
 
 dfseats = df.groupby(['seats']).agg(total_seats=('seats', 'sum'))
 print(dfseats.info)
+
+print(df.groupby(['fuel'])['km_driven'].mean())
